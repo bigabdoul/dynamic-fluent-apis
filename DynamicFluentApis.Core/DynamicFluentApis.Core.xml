@@ -1,0 +1,381 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DynamicFluentApis.Core</name>
+    </assembly>
+    <members>
+        <member name="T:DynamicFluentApis.Core.AssemblyInfoProvider">
+            <summary>
+            Provides common information about an assembly.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.AssemblyInfoProvider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.AssemblyInfoProvider"/> class.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Title">
+            <summary>
+            Gets the title of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Description">
+            <summary>
+            Gets the description of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Configuration">
+            <summary>
+            Gets the configuration of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Product">
+            <summary>
+            Gets the product name of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.ProductVersion">
+            <summary>
+            Gets the product version of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Company">
+            <summary>
+            Gets the company name of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Copyright">
+            <summary>
+            Gets the copyright statement of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Trademark">
+            <summary>
+            Gets the trade mark text of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.FileVersion">
+            <summary>
+            Gets the file version of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Culture">
+            <summary>
+            Gets the culture name of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.NeutralResourcesLanguage">
+            <summary>
+            Gest the neutral language name of an assembly's resources.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Guid">
+            <summary>
+            Gets the unique identifier of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.ComVisible">
+            <summary>
+            Gets the COM (Component Object Model) visibility of an assembly.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.AssemblyInfoProvider.Assembly">
+            <summary>
+            Gets the assembly from which the information has been extracted.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.AssemblyInfoProvider.ToString">
+            <summary>
+            Returns the string representation of the current instance of the <see cref="T:DynamicFluentApis.Core.AssemblyInfoProvider"/> class.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicFluentApis.Core.AssemblyInfoProvider.GetAssemblyInfo(System.Reflection.Assembly)">
+            <summary>
+            Extracts information from the specified assembly.
+            </summary>
+            <param name="asm">The assembly from which to extract information.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="asm"/> is null (Nothing in Visual Basic).</exception>
+        </member>
+        <member name="T:DynamicFluentApis.Core.FluentApiDefault">
+            <summary>
+            Marks a type as one that provides default values for another compatible type.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiDefault.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiDefault"/> class.
+            </summary>
+        </member>
+        <member name="T:DynamicFluentApis.Core.FluentApiIgnoreAttribute">
+            <summary>
+            Represents a custom attribute used to ignore a type when exploring an assemblies candidate types for fluent API support.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiIgnoreAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiIgnoreAttribute"/> class.
+            </summary>
+        </member>
+        <member name="T:DynamicFluentApis.Core.FluentApiMethodAttribute">
+            <summary>
+            Allows rewriting property names during the generation of a fluent API wrapper method.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiMethodAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiMethodAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiMethodAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiMethodAttribute"/> class using the specified parameter.
+            </summary>
+            <param name="setterName">The name of the setter method.</param>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiMethodAttribute.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiMethodAttribute"/> class using the specified parameters.
+            </summary>
+            <param name="setterName">The name of the setter method.</param>
+            <param name="getterName">The name of the getter method.</param>
+            <param name="nogetter">false to generate a getter method; otherwise, true.</param>
+        </member>
+        <member name="P:DynamicFluentApis.Core.FluentApiMethodAttribute.GetterName">
+            <summary>
+            Gets or sets the name of the getter method to implement.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.FluentApiMethodAttribute.SetterName">
+            <summary>
+            Gets or sets the name of the setter method to implement.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.FluentApiMethodAttribute.NoGetter">
+            <summary>
+            Determines whether a getter method should be defined.
+            </summary>
+        </member>
+        <member name="T:DynamicFluentApis.Core.FluentApiSetterMethodAttribute">
+            <summary>
+            Allows rewriting setter property names during the generation of a fluent API wrapper setter method.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiSetterMethodAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiSetterMethodAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiSetterMethodAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiSetterMethodAttribute"/> class using the provided parameters.
+            </summary>
+            <param name="setterName"></param>
+        </member>
+        <member name="T:DynamicFluentApis.Core.FluentApiTargetAttribute">
+            <summary>
+            Provides fluent API support to the class it decorates.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiTargetAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiTargetAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.FluentApiTargetAttribute.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.FluentApiTargetAttribute"/> class using the provided parameter.
+            </summary>
+            <param name="settersOnly">
+            Determines whether only setter methods should be defined on the fluent API wrapper class.
+            </param>
+        </member>
+        <member name="P:DynamicFluentApis.Core.FluentApiTargetAttribute.SetterMethodsOnly">
+            <summary>
+            Determines whether only setter methods should be defined on the fluent API wrapper class.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.FluentApiTargetAttribute.StaticNewInstanceMethod">
+            <summary>
+            Gets or sets the name of the static method that initializes a new instance 
+            of the proxy class, to be defined on the fluent API wrapper class.
+            </summary>
+        </member>
+        <member name="T:DynamicFluentApis.Core.DynamicFluentApiProvider">
+            <summary>
+            Represents a fluent API builder wrapped around an object.
+            </summary>
+        </member>
+        <member name="F:DynamicFluentApis.Core.DynamicFluentApiProvider._object">
+            <summary>
+            The underlying instance object.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.DynamicFluentApiProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.DynamicFluentApiProvider"/> class.
+            </summary>
+            <param name="obj">The object for which to provide fluent API support.</param>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider.TryInvokeMember(System.Dynamic.InvokeMemberBinder,System.Object[],System.Object@)">
+            <summary>
+            Provides the implementation for operations that invoke a member. Classes derived
+            from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify
+            dynamic behavior for operations such as calling a method.
+            </summary>
+            <param name="binder">
+            Provides information about the dynamic operation. The binder.Name property provides
+            the name of the member on which the dynamic operation is performed. For example,
+            for the statement sampleObject.SampleMethod(100), where sampleObject is an instance
+            of the class derived from the System.Dynamic.DynamicObject class, binder.Name
+            returns "SampleMethod". The binder.IgnoreCase property specifies whether the
+            member name is case-sensitive.
+            </param>
+            <param name="args">
+            The arguments that are passed to the object member during the invoke operation.
+            For example, for the statement sampleObject.SampleMethod(100), where sampleObject
+            is derived from the System.Dynamic.DynamicObject class, args[0] is equal to 100.
+            </param>
+            <param name="result">The result of the member invocation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider.TryGetMember(System.Dynamic.GetMemberBinder,System.Object@)">
+            <summary>
+            Provides the implementation for operations that get member values. Classes derived
+            from the System.Dynamic.DynamicObject class can override this method to specify
+            dynamic behavior for operations such as getting a value for a property.
+            </summary>
+            <param name="binder">
+            Provides information about the dynamic operation. The binder.Name property provides
+            the name of the member on which the dynamic operation is performed. For example,
+            for the statement sampleObject.SampleMethod(100), where sampleObject is an instance
+            of the class derived from the System.Dynamic.DynamicObject class, binder.Name
+            returns "SampleMethod". The binder.IgnoreCase property specifies whether the
+            member name is case-sensitive.
+            </param>
+            <param name="result">
+            The result of the get operation. For example, if the method is called for a property,
+            you can assign the property value to result.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="P:DynamicFluentApis.Core.DynamicFluentApiProvider.DynamicFluentApis#Core#IDynamicFluentApiProvider#Object">
+            <summary>
+            Returns the underlying object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider.GetObject``1">
+            <summary>
+            Casts the underlying object to the specified type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider.GetPropertyInfo``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Extracts the <see cref="T:System.Reflection.PropertyInfo"/> from the given property (lambda) expression.
+            </summary>
+            <typeparam name="TSource">The type of the source object.</typeparam>
+            <typeparam name="TProperty">The type of the property defined in <typeparamref name="TSource"/>.</typeparam>
+            <param name="property">The property from which to extract the <see cref="T:System.Reflection.PropertyInfo"/>.</param>
+            <returns></returns>
+        </member>
+        <member name="T:DynamicFluentApis.Core.DynamicFluentApiProvider`1">
+            <summary>
+            Represents a strongly-typed fluent API provider wrapped around an object of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">The underlying type this fluent API provider gives access to.</typeparam>
+            <remarks>
+            The idea is to create an instance of this class that dynamically creates a method for each public
+            read-write property of the type <typeparamref name="T"/> (where T is Person for instance) like so:
+            <para>
+            <code>
+            public class Person
+            {
+                public string FirstName { get; set; }
+                public string LastName { get; set; }
+                public System.DateTime BirthDate { get; set; }
+                public virtual double Age { get => System.DateTime.Today.Subtract(BirthDate).TotalDays / 365; }
+            }
+            </code>
+            </para>
+            <para>
+            <code>
+            Person p = new <see cref="T:DynamicFluentApis.Core.DynamicFluentApiProvider"/>&lt;Person>().FirstName("Abdoul").LastName("Kaba").BirthDate(System.DateTime.Parse("1976-11-12")).Object;
+            </code>
+            </para>
+            </remarks>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.DynamicFluentApiProvider`1"/> class.
+            </summary>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider`1.#ctor(`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:DynamicFluentApis.Core.DynamicFluentApiProvider`1"/> class using the specified object instance.
+            </summary>
+            <param name="instance">An object for which to provide fluent API support.</param>
+        </member>
+        <member name="P:DynamicFluentApis.Core.DynamicFluentApiProvider`1.Object">
+            <summary>
+            Gets the underlying strongly-typed object this <see cref="T:DynamicFluentApis.Core.DynamicFluentApiProvider`1"/> is wrapped around.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider`1.A(System.Action{`0})">
+            <summary>
+            Executes the specified action.
+            </summary>
+            <param name="action">The action to execute.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider`1.P``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Gets the value of the specified property expression.
+            </summary>
+            <typeparam name="TProperty">The type of the property.</typeparam>
+            <param name="property">A lambda expression that identifies the property value to return.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DynamicFluentApis.Core.DynamicFluentApiProvider`1.P``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Sets the specified value to the given property.
+            </summary>
+            <typeparam name="TProperty">The type of the property.</typeparam>
+            <param name="property">A lambda expression that identifies the property value to set.</param>
+            <param name="value">The value to set.</param>
+            <returns></returns>
+        </member>
+        <member name="T:DynamicFluentApis.Core.IDynamicFluentApiProvider">
+            <summary>
+            Specifies the contract for a type that implements a dynamic fluent API behaviour.
+            </summary>
+        </member>
+        <member name="P:DynamicFluentApis.Core.IDynamicFluentApiProvider.Object">
+            <summary>
+            When implemented by a type, gets the underlying object the 
+            <see cref="T:DynamicFluentApis.Core.IDynamicFluentApiProvider"/> is wrapped around.
+            </summary>
+        </member>
+        <member name="T:DynamicFluentApis.Core.IDynamicFluentApiProvider`1">
+            <summary>
+            Specifies the contract for a generic type that implements a dynamic fluent API behaviour.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:DynamicFluentApis.Core.IDynamicFluentApiProvider`1.Object">
+            <summary>
+            When implemented by a type, gets the underlying object the 
+            <see cref="T:DynamicFluentApis.Core.IDynamicFluentApiProvider`1"/> is wrapped around.
+            </summary>
+        </member>
+    </members>
+</doc>
