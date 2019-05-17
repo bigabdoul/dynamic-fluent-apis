@@ -11,8 +11,13 @@ namespace Demo1.LegacyWayOfProvidingFluentApiSupport
     {
         public static void Main()
         {
-            var p = new PersonWrapper().FirstName("Abdoul").LastName("Kaba").BirthDate(new DateTime(1990,7,29)).Object;
-            Console.WriteLine($"Hello, {p.FirstName}! You say you are {p.Age} and your last name is {p.LastName}, right?");
+            var p = new PersonWrapper()
+                .FirstName("Abdoul")
+                .LastName("Kaba")
+                .BirthDate(new DateTime(1990,7,29))
+                .Object;
+            Console.Write($"Hello, {p.FirstName}! You say you are {p.Age} ");
+            Console.WriteLine("and your last name is {p.LastName}, right?");
         }
 
         public interface IPerson
@@ -178,7 +183,7 @@ namespace Demo2.GeneratingDynamicAssemblies
             {
                 if (true == result?.Succeeded)
                 {
-                    WriteLine($"The generated assembly is {Environment.CurrentDirectory}\\{result.FileName}!");
+                    WriteLine($"The generated assembly is {Environment.CurrentDirectory}\\{result.AssemblyFileName}!");
                 }
                 else
                 {
