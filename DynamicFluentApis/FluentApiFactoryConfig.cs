@@ -126,7 +126,8 @@ namespace DynamicFluentApis
         public FluentApiFactoryConfig ScanAssemblyFrom(Type type) => ScanAssembly(type.Assembly);
 
         /// <summary>
-        /// Retrieve all types defined in the specified assembly.
+        /// Retrieve all types decorated with the custom attribute 
+        /// <see cref="FluentApiTargetAttribute"/> and defined in the specified assembly.
         /// </summary>
         /// <param name="asm">The asssembly to scan.</param>
         /// <returns></returns>
