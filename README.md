@@ -127,18 +127,24 @@ namespace Demo2.GeneratingDynamicAssemblies
                     FluentApiFactoryExecutionResult result1 = null;
                     result = config
                         .OnError(error => WriteLine($"A critical error occured: {error}"))
-                        .OnDeleteError((error, builder, file) => WriteLine($"Could not delete the file '{file}'. Reason for failure: {error.Message}"))
+                        .OnDeleteError((error, builder, file) =>
+                            WriteLine($"Could not delete the file '{file}'. Reason for failure: {error.Message}")
+                        )
                         .WithOverwriteOptions()
-                        // these methods modify the default prefix and suffix values
-                        .SetProxyClassNameSuffix("Cloned")      // internal sealed class PersonCloned : IPerson {...} public interface IPerson {...} are dynamically created
-                        .SetFluentTypeNamePrefix("Magic")       // public class MagicPerson {...} dynamically created
-                        .SetWrappedObjectPropertyName("Target") // public class MagicPerson { ... public virtual IPerson Target { get; } }
+                        // these 'Set...' methods modify the default prefix and suffix values
+                        // public interface IPerson {...}
+                        // internal sealed class PersonCloned : IPerson {...}
+                        .SetProxyClassNameSuffix("Cloned")
+                        .SetFluentTypeNamePrefix("Magic")
+                        // public class MagicPerson { ... public virtual IPerson Target { get; } }
+                        .SetWrappedObjectPropertyName("Target")
                         .WithConfig()
                         .ScanAssemblyFrom(typeof(Person))
                         .Execute()
                         .SetResult(r => result1 = r)
                         .Reset()
-                        // default options use 'Proxy' suffix (the above would have been 'PersonProxy' instead of 'PersonCloned'),
+                        // default options use 'Proxy' suffix (the above would have been 
+                        // 'PersonProxy' instead of 'PersonCloned'),
                         // and 'Fluent' prefix ('FluentPerson' instead of 'MagicPerson')
                         .WithDefaultOptions(overwrite: true)
                         .ScanAssemblyFrom(typeof(BootstrapModalModel))
@@ -157,7 +163,7 @@ namespace Demo2.GeneratingDynamicAssemblies
                 {
                     WriteLine("What's next? Grab that file and a reference to it in your project.");
                     WriteLine("You'll be able to use your fluent wrapper as shown in the next demo.");
-                    Write("The assemblies's names are similar to: HumanResources.DynamicFluentApis.abcdef.dll ");
+                    Write("The assemblies' names are similar to: HumanResources.DynamicFluentApis.abcdef.dll ");
                     WriteLine("and HumanResources.Web.Mvc.DynamicFluentApis.fedcba.dll");
                     Write("Where 'abcdef' and 'fedcba' are (for instance) the hash codes generated ");
                     WriteLine("for the dynamic fluent API assemblies.");
