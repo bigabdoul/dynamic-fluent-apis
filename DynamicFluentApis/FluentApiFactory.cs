@@ -1115,7 +1115,7 @@ namespace DynamicFluentApis
         private static void CheckFactoryBusy()
         {
             if (_factoryBusy)
-                throw new InvalidOperationException("The fluent API wrapper factory is busy right now!");
+                throw new InvalidOperationException("The fluent API factory is busy right now!");
         }
 
         private static bool TrySaveAssembly(AssemblyBuilder asmBuilder, string outputAssemblyFileName, bool? overwriteExisting = null)
