@@ -39,6 +39,8 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig OnError(Action<Exception> handler)
         {
+            CheckDisposed();
+
             if (_onErrorHandler != null)
                 throw new InvalidOperationException("An error handler already exists.");
 
@@ -54,6 +56,8 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig OnDeleteError(Action<Exception, AssemblyBuilder, string> handler)
         {
+            CheckDisposed();
+
             if (_onDeleteHandler != null)
                 throw new InvalidOperationException("A delete file error handler already exists.");
 
@@ -71,6 +75,8 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryOptions WithOptions(bool overwrite = false)
         {
+            CheckDisposed();
+
             if (_options == null)
                 _options = new FluentApiFactoryOptions(this);
 
@@ -91,6 +97,7 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig WithOptions(FluentApiFactoryOptions options)
         {
+            CheckDisposed();
             _options = FluentApiFactory.Options = options.NotNull(nameof(options));
             return this;
         }
@@ -103,6 +110,7 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig WithDefaultOptions(bool overwrite = false)
         {
+            CheckDisposed();
             _options = FluentApiFactory.Options = new FluentApiFactoryOptions(this).SetOverwriteExisting(overwrite);
             return this;
         }
@@ -114,6 +122,7 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig Scan(params Type[] types)
         {
+            CheckDisposed();
             _assemblyTypes = types.NotNull(nameof(types));
             return this;
         }
@@ -133,6 +142,7 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig ScanAssembly(Assembly asm)
         {
+            CheckDisposed();
             // get only types marked for fluent api support
             _assemblyTypes = asm.NotNull(nameof(asm)).GetTypes()
                 .Where(t => t.GetCustomAttribute<FluentApiTargetAttribute>(true) != null)
@@ -149,6 +159,7 @@ namespace DynamicFluentApis
         /// <exception cref="InvalidOperationException">You must first call one of the Scan methods.</exception>
         public FluentApiFactoryConfig Execute()
         {
+            CheckDisposed();
             try
             {
                 if (_assemblyTypes == null)
@@ -176,6 +187,7 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig SetResult(Action<FluentApiFactoryExecutionResult> action)
         {
+            CheckDisposed();
             action(_result);
             return this;
         }
@@ -188,6 +200,7 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig Reset()
         {
+            CheckDisposed();
             FluentApiFactory.Reset();
 
             _result = null;
@@ -205,6 +218,7 @@ namespace DynamicFluentApis
         /// <returns></returns>
         public FluentApiFactoryConfig Release(bool everything = false)
         {
+            CheckDisposed();
             if (_onErrorHandler != null)
             {
                 FluentApiFactory.Error -= _onErrorHandler;
@@ -232,9 +246,13 @@ namespace DynamicFluentApis
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">You must first call the method <see cref="Execute"/>.</exception>
-        public FluentApiFactoryExecutionResult Result() => _executed 
-            ? _result 
-            : throw new InvalidOperationException($"You must first call the method {MethodName(nameof(Execute))}.");
+        public FluentApiFactoryExecutionResult Result()
+        {
+            CheckDisposed();
+            return _executed
+                ? _result
+                : throw new InvalidOperationException($"You must first call the method {MethodName(nameof(Execute))}.");
+        }
 
         /// <summary>
         /// Release all resources used by the current <see cref="FluentApiFactoryConfig"/> class.
@@ -254,6 +272,11 @@ namespace DynamicFluentApis
             var message = $"You must first scan for types using one of the methods {m1}, {m2}, or {m3}.";
             System.Diagnostics.Debug.WriteLine(message);
             throw new InvalidOperationException(message);
+        }
+
+        private void CheckDisposed()
+        {
+            if (_disposed) throw new ObjectDisposedException(nameof(FluentApiFactoryConfig));
         }
 
         private static string MethodName(string name, params Type[] args)
