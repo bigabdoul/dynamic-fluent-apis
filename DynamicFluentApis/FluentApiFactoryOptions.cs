@@ -13,11 +13,11 @@ namespace DynamicFluentApis
         private string _proxyClassNameSuffix = "Proxy";
         private string _fluentTypeNamePrefix = "Fluent";
         private string _wrapperObjectPropertyName = "Object";
-        private readonly FluentApiFactoryConfig _fluentApiWrapper;
+        private readonly FluentApiFactoryConfig _fluentConfig;
 
         #endregion
 
-        #region default constructor
+        #region constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FluentApiFactoryOptions"/> class.
@@ -29,10 +29,13 @@ namespace DynamicFluentApis
         /// <summary>
         /// Initializes a new instance of the <see cref="FluentApiFactoryOptions"/> class.
         /// </summary>
-        /// <param name="wrapper">The wrapper to return when switching back. This is for providing fluent API support.</param>
-        internal FluentApiFactoryOptions(FluentApiFactoryConfig wrapper)
+        /// <param name="config">
+        /// The fluent API configuration to return when switching back by invoking 
+        /// <see cref="WithConfig"/>. This is for providing fluent API support.
+        /// </param>
+        internal FluentApiFactoryOptions(FluentApiFactoryConfig config)
         {
-            _fluentApiWrapper = wrapper;
+            _fluentConfig = config ?? throw new ArgumentNullException(nameof(config));
         }
 
         #endregion
@@ -186,13 +189,18 @@ namespace DynamicFluentApis
         /// initialized the current <see cref="FluentApiFactoryOptions"/>.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="InvalidOperationException">
+        /// This <see cref="FluentApiFactoryOptions"/> instance hasn't been created 
+        /// with an instance of the <see cref="FluentApiFactoryConfig"/> class.
+        /// </exception>
         public FluentApiFactoryConfig WithConfig()
         {
-            if (_fluentApiWrapper == null)
-                new InvalidOperationException();
-
-            return _fluentApiWrapper;
+            if (_fluentConfig == null)
+                throw new InvalidOperationException(
+                    $"This {nameof(FluentApiFactoryOptions)} instance hasn't been created " +
+                    $"with an instance of the {nameof(FluentApiFactoryConfig)} class."
+                );
+            return _fluentConfig;
         } 
 
         #endregion
