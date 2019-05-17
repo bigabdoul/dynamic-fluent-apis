@@ -130,16 +130,22 @@ namespace Demo2.GeneratingDynamicAssemblies
                         .OnDeleteError((error, builder, file) => WriteLine($"Could not delete the file '{file}'. Reason for failure: {error.Message}"))
                         .WithOverwriteOptions()
                         // these methods modify the default prefix and suffix values
-                        .SetProxyClassNameSuffix("Cloned")      // internal sealed class PersonCloned : IPerson {...} (public interface IPerson {...} is dynamically created)
-                        .SetFluentTypeNamePrefix("Magic")       // public class MagicPerson {...}
+                        .SetProxyClassNameSuffix("Cloned")      // internal sealed class PersonCloned : IPerson {...} public interface IPerson {...} are dynamically created
+                        .SetFluentTypeNamePrefix("Magic")       // public class MagicPerson {...} dynamically created
                         .SetWrappedObjectPropertyName("Target") // public class MagicPerson { ... public virtual IPerson Target { get; } }
                         .WithConfig()
                         .ScanAssemblyFrom(typeof(Person))
                         .Execute()
                         .SetResult(r => result1 = r)
                         .Reset()
-                        .WithDefaultOptions(overwrite: true)            // default options use 'Proxy' suffix, and 'Fluent' prefix
-                        .ScanAssemblyFrom(typeof(BootstrapModalModel))  // public class FluentBootstrapModalModel {...}
+                        // default options use 'Proxy' suffix (the above would have been 'PersonProxy' instead of 'PersonCloned'),
+                        // and 'Fluent' prefix ('FluentPerson' instead of 'MagicPerson')
+                        .WithDefaultOptions(overwrite: true)
+                        .ScanAssemblyFrom(typeof(BootstrapModalModel))
+                        // will generate, amongst others, the following types:
+                        // public interface IBootstrapModalModel {...}
+                        // internal sealed class BootstrapModalModelProxy : IBootstrapModalModel {...}
+                        // public class FluentBootstrapModalModel {...}
                         .Execute()
                         .Result();
 
@@ -151,8 +157,10 @@ namespace Demo2.GeneratingDynamicAssemblies
                 {
                     WriteLine("What's next? Grab that file and a reference to it in your project.");
                     WriteLine("You'll be able to use your fluent wrapper as shown in the next demo.");
-                    WriteLine("The assembly's name is similar to: Demo2.DynamicFluentApis.abcdef.dll");
-                    WriteLine("Where 'abcdef' is the hash code generated for the assembly.");
+                    Write("The assemblies's names are similar to: HumanResources.DynamicFluentApis.abcdef.dll ");
+                    WriteLine("and HumanResources.Web.Mvc.DynamicFluentApis.fedcba.dll");
+                    Write("Where 'abcdef' and 'fedcba' are (for instance) the hash codes generated ");
+                    WriteLine("for the dynamic fluent API assemblies.");
                 }
             }
             catch(Exception ex)
