@@ -933,7 +933,7 @@ namespace DynamicFluentApis
             var ctorDescription = typeof(AssemblyDescriptionAttribute).GetConstructor(new[] { typeof(string) });
             var ctorConfiguration = typeof(AssemblyConfigurationAttribute).GetConstructor(new[] { typeof(string) });
             var ctorProduct = typeof(AssemblyProductAttribute).GetConstructor(new[] { typeof(string) });
-            var ctorProductVersion = typeof(AssemblyVersionAttribute).GetConstructor(new[] { typeof(string) });
+            //var ctorProductVersion = typeof(AssemblyVersionAttribute).GetConstructor(new[] { typeof(string) });
             var ctorCompany = typeof(AssemblyCompanyAttribute).GetConstructor(new[] { typeof(string) });
             var ctorCopyright = typeof(AssemblyCopyrightAttribute).GetConstructor(new[] { typeof(string) });
             var ctorTrademark = typeof(AssemblyTrademarkAttribute).GetConstructor(new[] { typeof(string) });
@@ -954,7 +954,7 @@ namespace DynamicFluentApis
                 new CustomAttributeBuilder(ctorDescription, new[] { info.Description }),
                 new CustomAttributeBuilder(ctorConfiguration, new[] { info.Configuration }),
                 new CustomAttributeBuilder(ctorProduct, new[] { info.Product }),
-                new CustomAttributeBuilder(ctorProductVersion, new[] { info.ProductVersion }),
+                //new CustomAttributeBuilder(ctorProductVersion, new[] { info.ProductVersion }),
                 new CustomAttributeBuilder(ctorCompany, new[] { info.Company }),
                 new CustomAttributeBuilder(ctorCopyright, new[] { info.Copyright }),
                 new CustomAttributeBuilder(ctorTrademark, new[] { info.Trademark }),
