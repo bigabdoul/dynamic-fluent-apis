@@ -145,7 +145,7 @@ namespace DynamicFluentApis
         /// Make sure that you have already called the method <see cref="ScanAssemblyFrom(Type)"/>.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException">You must first call the method <see cref="ScanAssemblyFrom(Type)"/>.</exception>
+        /// <exception cref="InvalidOperationException">You must first call one of the Scan methods.</exception>
         public FluentApiFactoryConfig Execute()
         {
             try
