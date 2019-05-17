@@ -116,7 +116,7 @@ namespace Demo2.GeneratingDynamicAssemblies
                 // with the custom attribute FluentApiTargetAttribute
                 var types = typeof(Person).Assembly.GetTypes();
 
-                result = FluentApiFactory.Configure(overwrite: true).Scan(types).Execute.Release().Result();
+                result = FluentApiFactory.Configure(overwrite: true).Scan(types).Execute().Release().Result();
 
                 WriteAssemblyLocation(result);
 
