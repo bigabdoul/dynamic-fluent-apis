@@ -21,36 +21,36 @@ namespace DynamicFluentApis
     /// </summary>
     public static class FluentApiFactory
     {
-        #region private fields
+        #region fields
 
-        private const string get_ = "get_";
-        private const string set_ = "set_";
+        const string get_ = "get_";
+        const string set_ = "set_";
 
         /// <summary>
         /// Regex to remove illegal characters from a type name. Strips digits from the beginning.
         /// </summary>
-        private const string RE_VALID_TYPE_NAME = @"(^[0-9]*)|([^\w]*)";
+        const string RE_VALID_TYPE_NAME = @"(^[0-9]*)|([^\w]*)";
 
         /// <summary>
         /// public class OriginalClass {}
         /// </summary>
-        private const TypeAttributes PUBLIC_CLASS = TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.BeforeFieldInit;
+        const TypeAttributes PUBLIC_CLASS = TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.BeforeFieldInit;
 
         /// <summary>
         /// public interface IOriginalClass {}
         /// </summary>
-        private const TypeAttributes PUBLIC_INTERFACE = TypeAttributes.Public | TypeAttributes.Abstract | TypeAttributes.Interface;
+        const TypeAttributes PUBLIC_INTERFACE = TypeAttributes.Public | TypeAttributes.Abstract | TypeAttributes.Interface;
 
         /// <summary>
         /// internal sealed class OriginalClassProxy : IOriginalClass {}
         /// </summary>
-        private const TypeAttributes INTERNAL_SEALED_CLASS = TypeAttributes.NotPublic | TypeAttributes.Sealed | TypeAttributes.Class | TypeAttributes.BeforeFieldInit;
+        const TypeAttributes INTERNAL_SEALED_CLASS = TypeAttributes.NotPublic | TypeAttributes.Sealed | TypeAttributes.Class | TypeAttributes.BeforeFieldInit;
 
-        private static readonly Assembly SysAsm = typeof(string).Assembly;
-        private static readonly ConcurrentDictionary<string, Type> InternalDictionary = new ConcurrentDictionary<string, Type>();
-        private static FluentApiFactoryOptions _options = new FluentApiFactoryOptions();
+        static readonly Assembly SysAsm = typeof(string).Assembly;
+        static readonly ConcurrentDictionary<string, Type> InternalDictionary = new ConcurrentDictionary<string, Type>();
+        static FluentApiFactoryOptions _options = new FluentApiFactoryOptions();
 
-        private static volatile bool _factoryBusy;
+        static volatile bool _factoryBusy;
 
         #endregion
 
@@ -107,31 +107,51 @@ namespace DynamicFluentApis
         }
 
         /// <summary>
-        /// Creates a dynamic fluent API assembly from the types contained in the specified type's assembly and return its file name.
+        /// Creates a dynamic fluent API assembly from the types contained 
+        /// in the specified type's assembly and return its file name.
         /// </summary>
         /// <param name="fromAssemblyToScan">The type's assembly to scan.</param>
-        /// <param name="assemblyName">The name of the dynamic fluent API assembly to create.</param>
+        /// <param name="assemblyName">
+        /// The name of the dynamic fluent API assembly to create.
+        /// </param>
         /// <param name="parent">The base type from which created proxy types inherit.</param>
-        /// <param name="overwriteExisting">true to overwrite the output assembly file if it exists; otherwise, false.</param>
-        /// <returns>An initialized instance of the <see cref="FluentApiFactoryExecutionResult"/> class.</returns>
-        public static FluentApiFactoryExecutionResult AssemblyFrom(this Type fromAssemblyToScan, string assemblyName = null, Type parent = null, bool? overwriteExisting = null)
+        /// <param name="overwriteExisting">
+        /// true to overwrite the output assembly file if it exists; otherwise, false.
+        /// </param>
+        /// <returns>
+        /// An initialized instance of the <see cref="FluentApiFactoryExecutionResult"/> class.
+        /// </returns>
+        public static FluentApiFactoryExecutionResult AssemblyFrom(this Type fromAssemblyToScan
+            , string assemblyName = null, Type parent = null, bool? overwriteExisting = null)
         {
-            return AssemblyFrom(fromAssemblyToScan.Assembly, assemblyName, null, parent, overwriteExisting);
+            return AssemblyFrom(fromAssemblyToScan.Assembly, assemblyName, null, parent
+                , overwriteExisting);
         }
 
         /// <summary>
-        /// Creates a dynamic fluent API assembly from the specified types contained in the specified assembly and return its file name.
+        /// Creates a dynamic fluent API assembly from the specified types 
+        /// contained in the specified assembly and return its file name.
         /// </summary>
         /// <param name="assemblyToScan">
         /// The assembly to scan for types that will provide fluent API support. Only types marked 
         /// with the custom attribute <see cref="FluentApiTargetAttribute"/> will be considered.
         /// </param>
-        /// <param name="assemblyName">The name of the dynamic fluent API assembly to create.</param>
-        /// <param name="fileName">The physical file name under which the dynamic fluent API assembly will be saved.</param>
+        /// <param name="assemblyName">
+        /// The name of the dynamic fluent API assembly to create.
+        /// </param>
+        /// <param name="fileName">
+        /// The physical file name under which the dynamic fluent API assembly will be saved.
+        /// </param>
         /// <param name="parent">The base type from which created proxy types inherit.</param>
-        /// <param name="overwriteExisting">true to overwrite the output assembly file if it exists; otherwise, false.</param>
-        /// <returns>An initialized instance of the <see cref="FluentApiFactoryExecutionResult"/> class.</returns>
-        public static FluentApiFactoryExecutionResult AssemblyFrom(this Assembly assemblyToScan, string assemblyName = null, string fileName = null, Type parent = null, bool? overwriteExisting = null)
+        /// <param name="overwriteExisting">
+        /// true to overwrite the output assembly file if it exists; otherwise, false.
+        /// </param>
+        /// <returns>
+        /// An initialized instance of the <see cref="FluentApiFactoryExecutionResult"/> class.
+        /// </returns>
+        public static FluentApiFactoryExecutionResult AssemblyFrom(this Assembly assemblyToScan
+            , string assemblyName = null, string fileName = null, Type parent = null
+            , bool? overwriteExisting = null)
         {
             // get only types marked for fluent api support
             var assemblyTypes = assemblyToScan.GetTypes()
@@ -150,7 +170,9 @@ namespace DynamicFluentApis
         /// <param name="parent">The base type from which created proxy types inherit.</param>
         /// <param name="overwriteExisting">true to overwrite the output assembly file if it exists; otherwise, false.</param>
         /// <returns>An initialized instance of the <see cref="FluentApiFactoryExecutionResult"/> class.</returns>
-        public static FluentApiFactoryExecutionResult AssemblyFrom(this Type[] typesToScan, string assemblyName = null, string fileName = null, Type parent = null, bool? overwriteExisting = null)
+        public static FluentApiFactoryExecutionResult AssemblyFrom(this Type[] typesToScan
+            , string assemblyName = null, string fileName = null, Type parent = null
+            , bool? overwriteExisting = null)
         {
             CheckFactoryBusy();
 
@@ -552,7 +574,7 @@ namespace DynamicFluentApis
 
                 if (!isAbstract)
                 {
-                    // the private _object field that holds a reference to the original type
+                    // the _object field that holds a reference to the original type
                     backingField = targetBuilder.DefineField($"_{camelCasePropertyName}", propertyType, FieldAttributes.Private);
                     _implGet();
                 }
@@ -781,7 +803,7 @@ namespace DynamicFluentApis
             // for calling the base constructor; we suppose this class inherits directly from System.Object
             var objctor = parent.GetConstructor(Type.EmptyTypes);
 
-            // the private _object field that holds a reference to the original or interface type
+            // the _object field that holds a reference to the original or interface type
             var fieldBuilder = builder.DefineField($"_{Options.WrappedObjectPropertyName.ToCamelCase()}", fieldType, FieldAttributes.Private);
 
             // create the constructor builder
@@ -997,11 +1019,15 @@ namespace DynamicFluentApis
         /// If the remaining string is blank, optionally throws <see cref="ArgumentNullException"/>.
         /// </summary>
         /// <param name="s">The string to validate.</param>
-        /// <param name="thro">If <paramref name="s"/> is null or white space, true to throw an exception; otherwise, false to return an empty string.</param>
+        /// <param name="thro">
+        /// If <paramref name="s"/> is null or white space, true to throw 
+        /// an exception; otherwise, false to return an empty string.
+        /// </param>
         /// <returns></returns>
-        internal static string SanitizeName(this string s, bool thro = false) =>
+        internal static string SanitizeName(this string s, bool thro = false)=>
             // use Regex to do replacements
-            Replace(s.NotBlank(), RE_VALID_TYPE_NAME, string.Empty, RegexOptions.Compiled).NotBlank(thro);
+            Replace(s.NotBlank(), RE_VALID_TYPE_NAME, string.Empty
+                , RegexOptions.Compiled).NotBlank(thro);
 
         internal static T NotNull<T>(this T obj, string paramName = null) where T : class
         {
@@ -1009,36 +1035,45 @@ namespace DynamicFluentApis
             {
                 if (paramName.IsWhiteSpace())
                 {
-                    throw new ArgumentNullException($"The argument of type {typeof(T).FullName} cannot be null.", (Exception)null);
+                    throw new ArgumentNullException(
+                        $"The argument of type {typeof(T).FullName} cannot be null.",
+                        (Exception)null
+                    );
                 }
                 else
                 {
-                    throw new ArgumentNullException(paramName, $"The argument of type {typeof(T).FullName} cannot be null.");
+                    throw new ArgumentNullException(paramName
+                        , $"The argument of type {typeof(T).FullName} cannot be null."
+                    );
                 }
             }
             return obj;
         }
 
-        private static MethodBuilder CreateMethod(this TypeBuilder builder, MethodInfo method)
+        static MethodBuilder CreateMethod(this TypeBuilder builder, MethodInfo method)
         {
             var parameterTypes = method.GetParameterTypes();
-            var methBuilder = builder.DefineMethod(method.Name, method.Attributes, method.ReturnType, parameterTypes);
+            var methBuilder = builder.DefineMethod(method.Name
+                , method.Attributes, method.ReturnType, parameterTypes
+            );
             return methBuilder;
         }
 
-        private static Type[] GetParameterTypes(this MethodInfo methodInfo)
+        static Type[] GetParameterTypes(this MethodInfo methodInfo)
             => methodInfo.GetParameters().Select(p => p.ParameterType).ToArray();
 
-        private static string GetTypeName(this Type targetType, string prefix, string suffix = null)
+        static string GetTypeName(this Type targetType, string prefix, string suffix = null)
             => $"{targetType.Namespace}.{prefix}{targetType.Name}{suffix}";
 
         /// <summary>
         /// Returns an array of <see cref="PropertyInfo"/> elements from the specified 
         /// type that isn't marked with the attribute <see cref="FluentApiIgnoreAttribute"/>.
         /// </summary>
-        /// <param name="original">The type to filter. Only public read &amp; write properties are returned.</param>
+        /// <param name="original">
+        /// The type to filter. Only public read &amp; write properties are returned.
+        /// </param>
         /// <returns></returns>
-        private static PropertyInfo[] GetFluentProperties(this Type original)
+        static PropertyInfo[] GetFluentProperties(this Type original)
         {
             return original.GetProperties()
                     .Where(p => p.CanRead && p.CanWrite)
@@ -1046,9 +1081,10 @@ namespace DynamicFluentApis
                     .ToArray();
         }
 
-        private static string ToCamelCase(this string s) => s[0].ToString().ToLower() + s.Substring(1);
+        static string ToCamelCase(this string s) =>
+            s[0].ToString().ToLower() + s.Substring(1);
 
-        private static bool GetTypeFromDictionary(string fullTypeName, out Type result)
+        static bool GetTypeFromDictionary(string fullTypeName, out Type result)
         {
             result = null;
 
@@ -1063,9 +1099,10 @@ namespace DynamicFluentApis
             return result != null;
         }
 
-        private static void AddTypeToDictionary(Type value) => AddTypeToDictionary(value.FullName, value);
+        static void AddTypeToDictionary(Type value) =>
+            AddTypeToDictionary(value.FullName, value);
 
-        private static void AddTypeToDictionary(string key, Type value)
+        static void AddTypeToDictionary(string key, Type value)
         {
             if (!InternalDictionary.ContainsKey(key))
             {
@@ -1076,7 +1113,8 @@ namespace DynamicFluentApis
             }
         }
 
-        private static bool GetFluentApiMethodInfo(this PropertyInfo property, out FluentApiMethodAttribute methodAttr)
+        static bool GetFluentApiMethodInfo(this PropertyInfo property
+            , out FluentApiMethodAttribute methodAttr)
         {
             methodAttr = null;
             foreach (var attr in property.GetCustomAttributes(false))
@@ -1095,7 +1133,7 @@ namespace DynamicFluentApis
             return methodAttr != null;
         }
 
-        private static Type First(this Type[] types)
+        static Type First(this Type[] types)
         {
             if (types != null && types.Length > 0)
             {
@@ -1104,21 +1142,25 @@ namespace DynamicFluentApis
             return null;
         }
 
-        private static void DereferenceExternalsFailed(PropertyInfo property)
+        static void DereferenceExternalsFailed(PropertyInfo property)
         {
             if (Options.ThrowIfDereferenceExternalsFails)
             {
-                throw new InvalidOperationException($"Cannot create a dereferenced type for the property {property.ReflectedType?.FullName}.{property.Name}.");
+                throw new InvalidOperationException(
+                    $"Cannot create a dereferenced type for the property " +
+                    $"{property.ReflectedType?.FullName}.{property.Name}."
+                );
             }
         }
 
-        private static void CheckFactoryBusy()
+        static void CheckFactoryBusy()
         {
             if (_factoryBusy)
                 throw new InvalidOperationException("The fluent API factory is busy right now!");
         }
 
-        private static bool TrySaveAssembly(AssemblyBuilder asmBuilder, string outputAssemblyFileName, bool? overwriteExisting = null)
+        static bool TrySaveAssembly(AssemblyBuilder asmBuilder
+            , string outputAssemblyFileName, bool? overwriteExisting = null)
         {
             var success = true;
             try
@@ -1131,7 +1173,9 @@ namespace DynamicFluentApis
                     if (overwriteExisting.Value)
                         File.Delete(outputAssemblyFileName);
                     else
-                        throw new IOException($"The assembly '{outputAssemblyFileName}' already exists.");
+                        throw new IOException(
+                            $"The assembly '{outputAssemblyFileName}' already exists."
+                        );
                 }
             }
             catch (Exception ex)
@@ -1142,7 +1186,8 @@ namespace DynamicFluentApis
 
             if (success)
             {
-                //asmBuilder.Save(outputAssemblyFileName, PortableExecutableKinds.PE32Plus, ImageFileMachine.AMD64);
+                //asmBuilder.Save(outputAssemblyFileName, PortableExecutableKinds.PE32Plus
+                //    , ImageFileMachine.AMD64);
                 asmBuilder.Save(outputAssemblyFileName);
             }
 
