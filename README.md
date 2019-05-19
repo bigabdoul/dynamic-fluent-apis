@@ -111,7 +111,7 @@ namespace Demo2.GeneratingDynamicAssemblies
             {
                 // generate a dynamic assembly for the single Person class (very unlikely)
                 // minimalistic approach:
-                var result = FluentApiFactory.Configure().Scan(typeof(Person)).Build().Release().Result();
+                var result = FluentApiFactory.Configure().Scan(typeof(Person)).Build().ReleaseResources().Result();
 
                 WriteAssemblyLocation(result);
 
@@ -121,7 +121,7 @@ namespace Demo2.GeneratingDynamicAssemblies
                 // with the custom attribute FluentApiTargetAttribute
                 var types = typeof(Person).Assembly.GetTypes();
 
-                result = FluentApiFactory.Configure(overwrite: true).Scan(types).Build().Release().Result();
+                result = FluentApiFactory.Configure(overwrite: true).Scan(types).Build().ReleaseResources().Result();
 
                 WriteAssemblyLocation(result);
 
