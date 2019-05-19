@@ -111,7 +111,7 @@ namespace Demo2.GeneratingDynamicAssemblies
             {
                 // generate a dynamic assembly for the single Person class (very unlikely)
                 // minimalistic approach:
-                var result = FluentApiFactory.Configure().Scan(typeof(Person)).Execute().Release().Result();
+                var result = FluentApiFactory.Configure().Scan(typeof(Person)).Build().Release().Result();
 
                 WriteAssemblyLocation(result);
 
@@ -121,7 +121,7 @@ namespace Demo2.GeneratingDynamicAssemblies
                 // with the custom attribute FluentApiTargetAttribute
                 var types = typeof(Person).Assembly.GetTypes();
 
-                result = FluentApiFactory.Configure(overwrite: true).Scan(types).Execute().Release().Result();
+                result = FluentApiFactory.Configure(overwrite: true).Scan(types).Build().Release().Result();
 
                 WriteAssemblyLocation(result);
 
@@ -145,7 +145,7 @@ namespace Demo2.GeneratingDynamicAssemblies
                         .SetWrappedObjectPropertyName("Target")
                         .WithConfig()
                         .ScanAssemblyFrom(typeof(Person))
-                        .Execute()
+                        .Build()
                         .SetResult(r => result1 = r)
                         .Reset()
                         // default options use 'Proxy' suffix (the above would have been 
@@ -157,7 +157,7 @@ namespace Demo2.GeneratingDynamicAssemblies
                         // public interface IBootstrapModalModel {...}
                         // internal sealed class BootstrapModalModelProxy : IBootstrapModalModel {...}
                         // public class FluentBootstrapModalModel {...}
-                        .Execute()
+                        .Build()
                         .Result();
 
                     WriteAssemblyLocation(result);
