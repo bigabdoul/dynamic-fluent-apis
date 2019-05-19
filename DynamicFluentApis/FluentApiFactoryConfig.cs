@@ -116,7 +116,7 @@ namespace DynamicFluentApis
         }
 
         /// <summary>
-        /// Set the types that will be processed during the <see cref="Execute"/> method.
+        /// Set the types that will be processed during the <see cref="Build"/> method.
         /// </summary>
         /// <param name="types">A one-dimensional array of types to process.</param>
         /// <returns></returns>
@@ -157,7 +157,7 @@ namespace DynamicFluentApis
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">You must first call one of the Scan methods.</exception>
-        public FluentApiFactoryConfig Execute()
+        public FluentApiFactoryConfig Build()
         {
             CheckDisposed();
             try
@@ -245,13 +245,13 @@ namespace DynamicFluentApis
         /// Returns the result containing the dynamic assembly's file name, or the error that occured.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException">You must first call the method <see cref="Execute"/>.</exception>
+        /// <exception cref="InvalidOperationException">You must first call the method <see cref="Build"/>.</exception>
         public FluentApiFactoryExecutionResult Result()
         {
             CheckDisposed();
             return _executed
                 ? _result
-                : throw new InvalidOperationException($"You must first call the method {MethodName(nameof(Execute))}.");
+                : throw new InvalidOperationException($"You must first call the method {MethodName(nameof(Build))}.");
         }
 
         /// <summary>
