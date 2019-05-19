@@ -214,9 +214,9 @@ namespace DynamicFluentApis
         /// Dispose all resources used by the current <see cref="FluentApiFactoryConfig"/>, 
         /// including error handlers, and optionally the last execution result.
         /// </summary>
-        /// <param name="everything">true to also discard the last execution result; otherwise, false.</param>
+        /// <param name="all">true to also discard the last execution result; otherwise, false.</param>
         /// <returns></returns>
-        public FluentApiFactoryConfig Release(bool everything = false)
+        public FluentApiFactoryConfig ReleaseResources(bool all = false)
         {
             CheckDisposed();
             if (_onErrorHandler != null)
@@ -230,7 +230,7 @@ namespace DynamicFluentApis
                 FluentApiFactory.DeleteFileError -= _onDeleteHandler;
                 _onDeleteHandler = null;
             }
-            if (everything)
+            if (all)
             {
                 Reset();
             }
@@ -260,7 +260,7 @@ namespace DynamicFluentApis
         public void Dispose()
         {
             if (_disposed) return;
-            Release(true);
+            ReleaseResources(true);
             _disposed = true;
         }
 
