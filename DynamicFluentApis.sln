@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicFluentApis.Core", "DynamicFluentApis.Core\DynamicFluentApis.Core.csproj", "{E11EF489-A315-4E00-B892-B00A7049F7D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicFluentApis.Core", "src\DynamicFluentApis.Core\DynamicFluentApis.Core.csproj", "{E11EF489-A315-4E00-B892-B00A7049F7D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicFluentApis", "DynamicFluentApis\DynamicFluentApis.csproj", "{007B64C0-4531-478C-A06D-07E7F76E9F06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicFluentApis", "src\DynamicFluentApis\DynamicFluentApis.csproj", "{007B64C0-4531-478C-A06D-07E7F76E9F06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
