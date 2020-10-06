@@ -64,6 +64,7 @@
     <Compile Include="FluentApiFactory.cs" />
     <Compile Include="FluentApiFactoryExecutionResult.cs" />
     <Compile Include="FluentApiFactoryOptions.cs" />
+    <Compile Include="ModuleBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
