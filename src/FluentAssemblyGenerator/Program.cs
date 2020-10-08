@@ -36,8 +36,9 @@ namespace FluentAssemblyGenerator
             app.OnExecute(() =>
             {
                 var console = PowerConsole.SmartConsole.Default;
+                var sourceAsmPath = asmArg.Value;
 
-                if (string.IsNullOrWhiteSpace(asmArg.Value))
+                if (string.IsNullOrWhiteSpace(sourceAsmPath))
                 {
                     console.WriteError("You must specify the fully-qualified path to the assembly to scan.");
                     return 1;
@@ -45,7 +46,7 @@ namespace FluentAssemblyGenerator
 
                 try
                 {
-                    var asm = Assembly.LoadFile(asmArg.Value);
+                    var asm = Assembly.LoadFile(sourceAsmPath);
                     var scanTypes = scanTypesOption.HasValue() ? scanTypesOption.Value().Split(',') : null;
                     var typeList = new List<Type>();
 
@@ -78,16 +79,21 @@ namespace FluentAssemblyGenerator
                         var fileName = targetAsmFileOption.Value();
                         var dirName = string.IsNullOrWhiteSpace(fileName) ? Environment.CurrentDirectory : Path.GetDirectoryName(fileName);
 
+                        if (string.IsNullOrWhiteSpace(dirName))
+                            dirName = Path.GetDirectoryName(sourceAsmPath) ?? Environment.CurrentDirectory;
+
                         // build the assembly and get the result
                         var result = config.Build(fileName).Result();
 
                         if (true == result?.Succeeded)
                         {
-                            console.WriteLine($"The generated assembly is {dirName}{Path.DirectorySeparatorChar}{result.AssemblyFileName}!");
+                            console.WriteSuccess("Success!\n")
+                                .WriteLine("The generated assembly is:")
+                                .WriteLine(Path.Combine(dirName, result.AssemblyFileName));
                         }
                         else
                         {
-                            console.WriteError("Could not create the assembly! " + result?.Error?.Message);
+                            console.WriteError($"Could not create the assembly! {result?.Error?.Message}");
                         }
                     }
 

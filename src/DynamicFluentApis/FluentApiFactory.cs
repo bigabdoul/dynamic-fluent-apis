@@ -173,10 +173,15 @@ namespace DynamicFluentApis
             _factoryBusy = true;
             Exception error = null;
             var currentDir = Environment.CurrentDirectory;
-            Environment.CurrentDirectory = Path.GetDirectoryName(fileName);
             
             try
             {
+                var newDir = Path.GetDirectoryName(fileName); ;
+                if (!string.IsNullOrWhiteSpace(newDir))
+                {
+                    Environment.CurrentDirectory = newDir;
+                }
+
                 var assemblyToScan = typesToScan.First().Assembly;
 
                 if (string.IsNullOrWhiteSpace(assemblyName))
