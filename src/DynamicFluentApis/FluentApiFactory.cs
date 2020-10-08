@@ -1,7 +1,5 @@
 ﻿using DynamicFluentApis.Core;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
@@ -9,10 +7,10 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Resources;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using static System.Text.RegularExpressions.Regex;
 using System.Threading;
+using System.Threading.Tasks;
+using static System.Text.RegularExpressions.Regex;
 
 namespace DynamicFluentApis
 {
@@ -161,7 +159,7 @@ namespace DynamicFluentApis
         /// Creates a dynamic fluent API assembly from the specifed types.
         /// </summary>
         /// <param name="typesToScan">A one-dimensional array of types that will support fluent API pattern.</param>
-        /// <param name="assemblyName">The name of the dynamic fluent API assembly to create.</param>
+        /// <param name="assemblyName">The fully-qualified name of the dynamic fluent API assembly to create.</param>
         /// <param name="fileName">The physical file name under which the dynamic fluent API assembly will be saved.</param>
         /// <param name="parent">The base type from which created proxy types inherit.</param>
         /// <param name="overwriteExisting">true to overwrite the output assembly file if it exists; otherwise, false.</param>
@@ -174,25 +172,28 @@ namespace DynamicFluentApis
 
             _factoryBusy = true;
             Exception error = null;
-
+            var currentDir = Environment.CurrentDirectory;
+            Environment.CurrentDirectory = Path.GetDirectoryName(fileName);
+            
             try
             {
                 var assemblyToScan = typesToScan.First().Assembly;
 
-                if (string.IsNullOrEmpty(assemblyName))
+                if (string.IsNullOrWhiteSpace(assemblyName))
                 {
                     var asm = assemblyToScan.FullName;
-                    fileName = GetAssemblyFileName(asm, out assemblyName);
-                }
-                else
-                {
-                    fileName = assemblyName + ".dll";
+                    var fname = GetAssemblyFileName(asm, out assemblyName);
+
+                    if (string.IsNullOrWhiteSpace(fileName))
+                        fileName = fname;
                 }
 
                 var typesCreated = 0;
                 var info = AssemblyInfoProvider.GetAssemblyInfo(assemblyToScan);
                 var asmBuilder = CreateAssemblyBuilder(assemblyName, info.GetCustomAttributeBuilders());
-                var module = asmBuilder.CreateModuleBuilder(assemblyName, fileName);
+
+                var fileNameOnly = Path.GetFileName(fileName);
+                var module = asmBuilder.CreateModuleBuilder(assemblyName, fileNameOnly);
 
                 for (int i = 0; i < typesToScan.Length; i++)
                 {
@@ -240,10 +241,10 @@ namespace DynamicFluentApis
                         , info.Trademark
                     );
 
-                    if (!TrySaveAssembly(asmBuilder, fileName, overwriteExisting))
+                    if (!TrySaveAssembly(asmBuilder, fileNameOnly, overwriteExisting))
                     {
+                        error = new IOException($"Could not save the file '{fileNameOnly}'.");
                         fileName = null;
-                        error = new IOException($"Could not save the file '{fileName}'.");
                     }
                 }
                 else
@@ -260,6 +261,7 @@ namespace DynamicFluentApis
             }
             finally
             {
+                Environment.CurrentDirectory = currentDir;
                 _factoryBusy = false;
             }
 

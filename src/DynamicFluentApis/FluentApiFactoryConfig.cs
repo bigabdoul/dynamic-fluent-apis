@@ -73,14 +73,19 @@ namespace DynamicFluentApis
         /// </summary>
         /// <param name="overwrite">true to overwrite any previously-built existing assembly file; otherwise, false.</param>
         /// <returns></returns>
-        public FluentApiFactoryOptions WithOptions(bool overwrite = false)
+        public FluentApiFactoryOptions WithOptions(bool? overwrite = null)
         {
             CheckDisposed();
 
             if (_options == null)
                 _options = new FluentApiFactoryOptions(this);
 
-            return FluentApiFactory.Options = _options.SetOverwriteExisting(overwrite);
+            FluentApiFactory.Options = _options;
+            
+            if (overwrite.HasValue)
+                _options.SetOverwriteExisting(overwrite.Value);
+
+            return _options;
         }
 
         /// <summary>
@@ -141,12 +146,32 @@ namespace DynamicFluentApis
         /// <param name="asm">The asssembly to scan.</param>
         /// <returns></returns>
         public FluentApiFactoryConfig ScanAssembly(Assembly asm)
+            => ScanAssembly(asm, true);
+
+        /// <summary>
+        /// Retrieve all types defined in the specified assembly, and optionally
+        /// restrict to the types decorated with the <see cref="FluentApiTargetAttribute"/>
+        /// attribute.
+        /// </summary>
+        /// <param name="asm">The asssembly to scan.</param>
+        /// <param name="decoratedWithFluentApiTargetAttribute">
+        /// true to retrieve only types decorated with the <see cref="FluentApiTargetAttribute"/>
+        /// attribute, otherwise false.
+        /// </param>
+        /// <returns></returns>
+        public FluentApiFactoryConfig ScanAssembly(Assembly asm, bool decoratedWithFluentApiTargetAttribute)
         {
             CheckDisposed();
-            // get only types marked for fluent api support
-            _assemblyTypes = asm.NotNull(nameof(asm)).GetTypes()
-                .Where(t => t.GetCustomAttribute<FluentApiTargetAttribute>(true) != null)
-                .ToArray();
+
+            var types = asm.NotNull(nameof(asm)).GetTypes();
+
+            if (decoratedWithFluentApiTargetAttribute)
+                // get only types marked for fluent api support
+                _assemblyTypes = types
+                    .Where(t => t.GetCustomAttribute<FluentApiTargetAttribute>(true) != null)
+                    .ToArray();
+
+            _assemblyTypes = types;
 
             return this;
         }
@@ -155,9 +180,10 @@ namespace DynamicFluentApis
         /// Executes the method <see cref="FluentApiFactory.AssemblyFrom(Type[], string, string, Type, bool?)"/>.
         /// Make sure that you have already called the method <see cref="ScanAssemblyFrom(Type)"/>.
         /// </summary>
+        /// <param name="fileName">The physical file name under which the dynamic fluent API assembly will be saved.</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">You must first call one of the Scan methods.</exception>
-        public FluentApiFactoryConfig Build()
+        public FluentApiFactoryConfig Build(string fileName = null)
         {
             CheckDisposed();
             try
@@ -165,7 +191,7 @@ namespace DynamicFluentApis
                 if (_assemblyTypes == null)
                     ThrowScanRequired();
 
-                _result = FluentApiFactory.AssemblyFrom(_assemblyTypes);
+                _result = FluentApiFactory.AssemblyFrom(_assemblyTypes, fileName: fileName);
                 _executed = true;
 
                 if (!_result.Succeeded)
