@@ -2,11 +2,14 @@
 
 namespace HumanResources
 {
-    public class Person : IPerson
+    /// <summary>
+    /// Represents a person.
+    /// </summary>
+    public class Person
     {
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
         public virtual DateTime BirthDate { get; set; }
-        public double Age { get => DateTime.Today.Subtract(BirthDate).TotalDays / 365; }
+        public int Age { get => BirthDate.GetFullYear(); }
     }
 }

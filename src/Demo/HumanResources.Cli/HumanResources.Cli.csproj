@@ -33,6 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HumanResources.DynamicFluentApis.89dbcda3, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\HumanResources.DynamicFluentApis.89dbcda3.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerConsole, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PowerConsole.1.2.0\lib\netstandard2.0\PowerConsole.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,13 +50,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HumanResourcesAssemblyGenerator.cs" />
+    <Compile Include="HumanResourcesFluentTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DynamicFluentApis.Core\DynamicFluentApis.Core.csproj">
+      <Project>{e11ef489-a315-4e00-b892-b00a7049f7d9}</Project>
+      <Name>DynamicFluentApis.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DynamicFluentApis\DynamicFluentApis.csproj">
+      <Project>{007b64c0-4531-478c-a06d-07e7f76e9f06}</Project>
+      <Name>DynamicFluentApis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HumanResources\HumanResources.csproj">
       <Project>{63dee300-ff2f-4cb6-a68f-6eac8ff9215d}</Project>
       <Name>HumanResources</Name>

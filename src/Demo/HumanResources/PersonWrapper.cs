@@ -4,14 +4,14 @@ namespace HumanResources
 {
     public class PersonWrapper
     {
-        private readonly IPerson _person;
+        private readonly Person _person;
 
         public PersonWrapper()
         {
             _person = new Person();
         }
 
-        public PersonWrapper(IPerson person)
+        public PersonWrapper(Person person)
         {
             _person = person;
         }
@@ -40,6 +40,6 @@ namespace HumanResources
             return this;
         }
 
-        public IPerson Object { get => _person; }
+        public Person Object { get => _person; }
     }
 }
