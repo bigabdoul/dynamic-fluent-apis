@@ -46,7 +46,17 @@ namespace FluentAssemblyGenerator
 
                 try
                 {
-                    var asm = Assembly.LoadFile(sourceAsmPath);
+                    Assembly asm;
+                    try
+                    {
+                        asm = Assembly.LoadFile(sourceAsmPath);
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        console.WriteError($"The system cannot find the specified assembly:\n{sourceAsmPath}\n");
+                        return 3;
+                    }
+
                     var scanTypes = scanTypesOption.HasValue() ? scanTypesOption.Value().Split(',') : null;
                     var typeList = new List<Type>();
 
