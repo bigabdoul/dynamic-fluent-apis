@@ -186,11 +186,18 @@ namespace DynamicFluentApis
 
                 if (string.IsNullOrWhiteSpace(assemblyName))
                 {
-                    var asm = assemblyToScan.FullName;
-                    var fname = GetAssemblyFileName(asm, out assemblyName);
+                    if (!string.IsNullOrWhiteSpace(fileName))
+                    {
+                        assemblyName = Path.GetFileNameWithoutExtension(fileName);
+                    }
+                    else
+                    {
+                        var asm = assemblyToScan.FullName;
+                        var fname = GetAssemblyFileName(asm, out assemblyName);
 
-                    if (string.IsNullOrWhiteSpace(fileName))
-                        fileName = fname;
+                        if (string.IsNullOrWhiteSpace(fileName))
+                            fileName = fname;
+                    }
                 }
 
                 var typesCreated = 0;
