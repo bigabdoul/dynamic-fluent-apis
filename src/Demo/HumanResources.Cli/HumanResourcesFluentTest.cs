@@ -1,4 +1,5 @@
-﻿using static HumanResources.Cli.Program;
+﻿using PowerConsole;
+using static HumanResources.Cli.Program;
 
 namespace HumanResources.Cli
 {
@@ -6,17 +7,13 @@ namespace HumanResources.Cli
     {
         public static void Test()
         {
-            var person = new FluentPerson()
+            var e = new MagicEmployee()
                 .FirstName(PromptFirstName())
                 .LastName(PromptLastName())
                 .BirthDate(PromptBirthDate())
-                .Object;
+                .Target;
 
-            var employee = new FluentEmployee()
-                .FirstName(PromptFirstName())
-                .LastName(PromptLastName())
-                .BirthDate(PromptBirthDate())
-                .Object;
+            SmartConsole.Default.WriteLine($"{e.FirstName} {e.LastName}\nDate of birth: {e.BirthDate:dd/MM/yyyy}");
         }
     }
 }

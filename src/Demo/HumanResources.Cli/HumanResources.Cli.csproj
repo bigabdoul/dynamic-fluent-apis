@@ -33,9 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HumanResources.DynamicFluentApis.89dbcda3, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="HumanResources.Fluent, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\HumanResources.DynamicFluentApis.89dbcda3.dll</HintPath>
+      <HintPath>bin\Debug\HumanResources.Fluent.dll</HintPath>
     </Reference>
     <Reference Include="PowerConsole, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PowerConsole.1.2.0\lib\netstandard2.0\PowerConsole.dll</HintPath>
